@@ -6,19 +6,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div>
       <ul>
-        <li>
+        <button>
           <Link href="/">홈</Link>
-        </li>
+        </button>
 
-        <li>
+        <button>
           <Link href="/intro">소개</Link>
-        </li>
-        <li>
-          <Link href="/details/apple">사과</Link>
-        </li>
-        <li>
-          <Link href="/details/banana">바나나</Link>
-        </li>
+        </button>
+
+        <button>
+          <Link href="/gugudan">구구단</Link>
+        </button>
       </ul>
       <Component {...pageProps} />
     </div>
