@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import React, { useState, useRef } from "react";
 
 interface InitProps {

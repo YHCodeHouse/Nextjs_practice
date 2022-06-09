@@ -11,11 +11,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         </button>
 
         <button>
-          <Link href="/intro">소개</Link>
+          <Link href="/gugudan">구구단</Link>
         </button>
 
         <button>
-          <Link href="/gugudan">구구단</Link>
+          <Link href="/wordrelay">끝말잇기</Link>
         </button>
       </ul>
       <Component {...pageProps} />
