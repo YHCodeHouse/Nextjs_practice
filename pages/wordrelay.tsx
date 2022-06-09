@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import styled from "@emotion/styled";
 
+interface Result {
+  result: string;
+}
 export default function WordRelay() {
   const [word, setWord] = useState("김영호");
   const [value, setValue] = useState("");
@@ -22,12 +26,39 @@ export default function WordRelay() {
 
   return (
     <>
-      <div>{word}</div>
-      <form onSubmit={onSubmitForm}>
+      <Word>
+        <h1>{word}</h1>
+      </Word>
+      <SubmitWord onSubmit={onSubmitForm}>
         <input value={value} onChange={onChangeInput} />
         <button>입력!</button>
-      </form>
-      <div>{result}</div>
+      </SubmitWord>
+      <Result result={result}>{result}</Result>
     </>
   );
 }
+
+const Word = styled("div")(() => {
+  return {
+    display: "flex",
+    justifyContent: "center"
+  };
+});
+
+const SubmitWord = styled("form")(() => {
+  return {
+    display: "flex",
+    justifyContent: "center",
+    height: "30px",
+    width: "100%"
+  };
+});
+
+const Result = styled("div")((props: Result) => {
+  const { result } = props;
+  return {
+    display: "flex",
+    justifyContent: "center",
+    color: result === "땡" ? "red" : "blue"
+  };
+});

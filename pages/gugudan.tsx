@@ -1,16 +1,19 @@
 import React, { useState, useRef } from "react";
+import styled from "@emotion/styled";
 
 interface InitProps {
   first: number;
   second: number;
 }
-
+interface Result {
+  result: string;
+}
 export default function GuGuDan(init: InitProps) {
   const [first, setFirst] = useState(init.first);
   const [second, setSecond] = useState(init.second);
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
-  const inputRef = useRef(null);
+
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFirst(first);
     setSecond(second);
@@ -35,12 +38,12 @@ export default function GuGuDan(init: InitProps) {
 
   return (
     <>
-      <div>
+      <Question>
         <h1>
           {first} 곱하기 {second} 는?
         </h1>
-      </div>
-      <form
+      </Question>
+      <SubmitNumber
         onSubmit={e => {
           onSubmitInput(e);
         }}
@@ -54,8 +57,8 @@ export default function GuGuDan(init: InitProps) {
         />
 
         <button type="submit">입력!</button>
-      </form>
-      <div>{result}</div>
+      </SubmitNumber>
+      <Result result={result}>{result}</Result>
     </>
   );
 }
@@ -65,3 +68,28 @@ GuGuDan.getInitialProps = () => {
   const second = Math.ceil(Math.random() * 9);
   return { first, second };
 };
+
+const Question = styled("div")(() => {
+  return {
+    display: "flex",
+    justifyContent: "center"
+  };
+});
+
+const SubmitNumber = styled("form")(() => {
+  return {
+    display: "flex",
+    justifyContent: "center",
+    height: "30px",
+    width: "100%"
+  };
+});
+
+const Result = styled("div")((props: Result) => {
+  const { result } = props;
+  return {
+    display: "flex",
+    justifyContent: "center",
+    color: result === "땡" ? "red" : "blue"
+  };
+});
