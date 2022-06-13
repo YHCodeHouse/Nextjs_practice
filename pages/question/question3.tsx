@@ -2,15 +2,20 @@ import React, { useState } from "react";
 
 const Question3 = () => {
   let [count, setCount] = useState(0);
-
+  let [toggle, setToggle] = useState(false);
   const onChangeCount = () => {
-    setCount(prev => prev + 1);
+    count += 1;
+  };
+  const onChangeCount2 = () => {
+    setToggle(prev => !prev);
   };
 
   console.log("count", count);
   return (
     <>
       <button onClick={onChangeCount}>버튼</button>
+      <button onClick={onChangeCount2}>변경</button>
+
       <div>리렌더링 횟수:{count}</div>
     </>
   );

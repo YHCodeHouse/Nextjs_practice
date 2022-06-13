@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
+import { useForm } from "react-hook-form";
 
 interface Result {
   result: string;
@@ -8,9 +9,13 @@ export default function WordRelay() {
   const [word, setWord] = useState("김영호");
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<Result>();
 
-  const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmitForm = () => {
     if (word[word.length - 1] === value[0]) {
       setWord(value);
       setValue("");
@@ -29,10 +34,15 @@ export default function WordRelay() {
       <Word>
         <h1>{word}</h1>
       </Word>
-      <SubmitWord onSubmit={onSubmitForm}>
-        <input value={value} onChange={onChangeInput} />
+      <SubmitWord onSubmit={handleSubmit(onSubmitForm)}>
+        <input
+          {...register("result", { required: "result", min: 1 })}
+          value={value}
+          onChange={onChangeInput}
+        />
         <button>입력!</button>
       </SubmitWord>
+      {errors.result && <span>{value}최소 1글자 입력하세요.</span>}
       <Result result={result}>{result}</Result>
     </>
   );

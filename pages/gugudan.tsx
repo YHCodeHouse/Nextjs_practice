@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import styled from "@emotion/styled";
+import { useForm } from "react-hook-form";
 
 interface InitProps {
   first: number;
@@ -13,6 +14,11 @@ export default function GuGuDan(init: InitProps) {
   const [second, setSecond] = useState(init.second);
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<Result>();
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFirst(first);
@@ -21,8 +27,7 @@ export default function GuGuDan(init: InitProps) {
     setResult("");
   };
 
-  const onSubmitInput = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmitInput = () => {
     if (parseInt(value) === first * second) {
       setFirst(Math.ceil(Math.random() * 9));
       setSecond(Math.ceil(Math.random() * 9));
@@ -43,12 +48,9 @@ export default function GuGuDan(init: InitProps) {
           {first} 곱하기 {second} 는?
         </h1>
       </Question>
-      <SubmitNumber
-        onSubmit={e => {
-          onSubmitInput(e);
-        }}
-      >
+      <SubmitNumber onSubmit={handleSubmit(onSubmitInput)}>
         <input
+          {...register("result", { required: "result", min: 1 })}
           type="number"
           value={value}
           onChange={e => {
@@ -56,9 +58,10 @@ export default function GuGuDan(init: InitProps) {
           }}
         />
 
-        <button type="submit">입력!</button>
+        <button>입력!</button>
       </SubmitNumber>
-      <Result result={result}>{result}</Result>
+      {errors.result && <span>최소 1글자 입력하세요.</span>}
+      {!errors.result && <Result result={result}>{result}</Result>}
     </>
   );
 }
