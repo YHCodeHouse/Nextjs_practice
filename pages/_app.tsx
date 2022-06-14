@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Link href="/question/question9">문제9번</Link>
         </button>
         <button>
-          <Link href="/example">예제</Link>
+          <Link href="/useRefSample">useRef</Link>
         </button>
       </ul>
       <Component {...pageProps} />

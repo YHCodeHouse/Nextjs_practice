@@ -50,7 +50,7 @@ export default function GuGuDan(init: InitProps) {
       </Question>
       <SubmitNumber onSubmit={handleSubmit(onSubmitInput)}>
         <input
-          {...register("result", { required: "result", min: 1 })}
+          {...register("result", { required: true })}
           type="number"
           value={value}
           onChange={e => {

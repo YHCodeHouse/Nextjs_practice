@@ -8,6 +8,7 @@ const Question3 = () => {
   };
   const onChangeCount2 = () => {
     setToggle(prev => !prev);
+    console.log("in function : ", count);
   };
 
   console.log("count", count);
