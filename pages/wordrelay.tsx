@@ -1,20 +1,32 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 interface Result {
   result: string;
 }
+const nameRegex = /^[A-Za-z]+$/;
+const schema = yup
+  .object()
+  .shape({
+    result: yup
+      .string()
+      .matches(nameRegex, "Only English letters")
+      .required("Required *")
+  })
+  .required();
+
 export default function WordRelay() {
-  const [word, setWord] = useState("김영호");
+  const [word, setWord] = useState("asdf");
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<Result>();
-
+  } = useForm<Result>({ mode: "onChange", resolver: yupResolver(schema) });
+  const wordValidation = register("result");
   const onSubmitForm = () => {
     if (word[word.length - 1] === value[0]) {
       setWord(value);
@@ -36,13 +48,16 @@ export default function WordRelay() {
       </Word>
       <SubmitWord onSubmit={handleSubmit(onSubmitForm)}>
         <input
-          {...register("result", { required: "result", min: 1 })}
+          {...register("result")}
           value={value}
-          onChange={onChangeInput}
+          onChange={e => {
+            wordValidation.onChange(e);
+            onChangeInput(e);
+          }}
         />
         <button>입력!</button>
       </SubmitWord>
-      {errors.result && <span>{value}최소 1글자 입력하세요.</span>}
+      {errors.result && <span>영어만 입력하세요</span>}
       <Result result={result}>{result}</Result>
     </>
   );
