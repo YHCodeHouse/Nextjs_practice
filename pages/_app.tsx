@@ -18,9 +18,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <button>
             <Link href="/lecture/wordrelay">끝말잇기</Link>
           </button>
-          <button>
+          {/* <button>
             <Link href="/lecture/numberBaseball">숫자야구</Link>
-          </button>
+          </button> */}
         </li>
         <li>
           <button>
